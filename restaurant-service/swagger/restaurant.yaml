@@ -1,0 +1,88 @@
+openapi: 3.0.0
+info:
+  title: Restaurant Service API
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:5002
+
+paths:
+  /api/restaurants:
+    get:
+      summary: Get all restaurants
+      responses:
+        '200':
+          description: Success
+
+    post:
+      summary: Create a restaurant
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                location:
+                  type: string
+                cuisine:
+                  type: string
+                contactNumber:
+                  type: string
+      responses:
+        '201':
+          description: Restaurant created
+
+  /api/restaurants/{id}:
+    get:
+      summary: Get restaurant by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+
+    put:
+      summary: Update restaurant
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                location:
+                  type: string
+                cuisine:
+                  type: string
+                contactNumber:
+                  type: string
+      responses:
+        '200':
+          description: Updated
+
+    delete:
+      summary: Delete restaurant
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Deleted

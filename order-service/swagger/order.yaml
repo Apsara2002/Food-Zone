@@ -1,0 +1,117 @@
+openapi: 3.0.0
+info:
+  title: Order Service API
+  version: 1.0.0
+  description: API for managing food orders
+
+servers:
+  - url: http://localhost:5004
+
+paths:
+  /api/orders:
+    get:
+      summary: Get all orders
+      responses:
+        '200':
+          description: Orders retrieved successfully
+
+    post:
+      summary: Create a new order
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                customerId:
+                  type: string
+                  example: "69c0b759eb95af2b160282a4"
+                restaurantId:
+                  type: string
+                  example: "69c0b7eab35048e572a3c3bb"
+                menuItemId:
+                  type: string
+                  example: "69c0d7dc86aa903b1ceafab9"
+                quantity:
+                  type: integer
+                  example: 2
+              required:
+                - customerId
+                - restaurantId
+                - menuItemId
+                - quantity
+      responses:
+        '201':
+          description: Order created successfully
+        '400':
+          description: Bad request
+        '404':
+          description: Customer, restaurant, or menu item not found
+
+  /api/orders/{id}:
+    get:
+      summary: Get order by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Order ID
+      responses:
+        '200':
+          description: Order retrieved successfully
+        '404':
+          description: Order not found
+
+    put:
+      summary: Update an order
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Order ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                quantity:
+                  type: integer
+                  example: 3
+                status:
+                  type: string
+                  enum:
+                    - Pending
+                    - Confirmed
+                    - Preparing
+                    - Delivered
+                    - Cancelled
+                  example: Confirmed
+      responses:
+        '200':
+          description: Order updated successfully
+        '400':
+          description: Bad request
+        '404':
+          description: Order not found
+
+    delete:
+      summary: Delete an order
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Order ID
+      responses:
+        '200':
+          description: Order deleted successfully
+        '404':
+          description: Order not found

@@ -1,0 +1,92 @@
+openapi: 3.0.0
+info:
+  title: Menu Service API
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:5003
+
+paths:
+  /api/menu:
+    get:
+      summary: Get all menu items
+      responses:
+        '200':
+          description: Success
+
+    post:
+      summary: Create a menu item
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                category:
+                  type: string
+                price:
+                  type: number
+                restaurantId:
+                  type: string
+                availability:
+                  type: boolean
+      responses:
+        '201':
+          description: Menu item created
+
+  /api/menu/{id}:
+    get:
+      summary: Get menu item by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+
+    put:
+      summary: Update menu item
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                category:
+                  type: string
+                price:
+                  type: number
+                restaurantId:
+                  type: string
+                availability:
+                  type: boolean
+      responses:
+        '200':
+          description: Updated
+
+    delete:
+      summary: Delete menu item
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Deleted
